@@ -1,0 +1,32 @@
+server:
+  AppVersion: 1.0.0
+  Port: :5000
+  Mode: Development
+
+rabbitmq:
+  Host: localhost
+  Port: 5672
+  User: guest
+  Password: guest
+  Exchange: auth-exchange
+  Queue: auth-queue
+  RoutingKey: auth-routing-key
+  ConsumerTag: auth-consumer
+  WorkerPoolSize: 24
+
+logger:
+  Development: true
+  DisableCaller: false
+  DisableStacktrace: false
+  Encoding: json
+  Level: info
+
+postgres:
+  PostgresqlHost: postgesql
+  PostgresqlPort: 5432
+  PostgresqlUser: postgres
+  PostgresqlPassword: postgres
+  PostgresqlDbname: auth_db
+  PostgresqlSslmode: false
+  PgDriver: pgx
+

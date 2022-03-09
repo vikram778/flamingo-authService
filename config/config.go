@@ -12,7 +12,6 @@ type Config struct {
 	Twilio   TwilioConfig
 	RabbitMQ RabbitMQ
 	Postgres PostgresConfig
-	Logger   Logger
 }
 
 // Server config struct
@@ -33,15 +32,6 @@ type RabbitMQ struct {
 	RoutingKey     string
 	ConsumerTag    string
 	WorkerPoolSize int
-}
-
-// Logger config
-type Logger struct {
-	Development       bool
-	DisableCaller     bool
-	DisableStacktrace bool
-	Encoding          string
-	Level             string
 }
 
 // Postgresql config

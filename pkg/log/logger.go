@@ -56,55 +56,9 @@ func bootstrap(level zapcore.Level) {
 	)
 }
 
-// DebugWithTracing log debug entry with a trace id
-func DebugWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Debug(message, fields...)
-}
-
-// Debug log entry at debug level
-func Debug(message string, fields ...zap.Field) {
-	logger.Debug(message, fields...)
-}
-
-// InfoWithTraceID log info entry with a trace id
-func InfoWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Info(message, fields...)
-}
-
 // Info log entry at info level
 func Info(message string, fields ...zap.Field) {
 	logger.Info(message, fields...)
-}
-
-// WarnWithTraceID log warning entry with a trace id
-func WarnWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Warn(message, fields...)
-}
-
-// Warn log entry at warning level
-func Warn(message string, fields ...zap.Field) {
-	logger.Warn(message, fields...)
-}
-
-// ErrorWithTraceID log error entry with a trace id
-func ErrorWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Error(message, fields...)
 }
 
 // Error log entryat error level
@@ -112,30 +66,7 @@ func Error(message string, fields ...zap.Field) {
 	logger.Error(message, fields...)
 }
 
-// FatalWithTraceID log fatal entry with a trace id
-func FatalWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Fatal(message, fields...)
-}
-
 // Fatal log entry at fatal level
 func Fatal(message string, fields ...zap.Field) {
 	logger.Fatal(message, fields...)
-}
-
-// PanicWithTraceID log panic entry with a trace id
-func PanicWithTraceID(traceID, message string, fields ...zap.Field) {
-	if traceID != "" {
-		fields = append(fields, zap.String("trace_id", traceID))
-	}
-
-	Panic(message, fields...)
-}
-
-// Panic log entry at panic level
-func Panic(message string, fields ...zap.Field) {
-	logger.Panic(message, fields...)
 }

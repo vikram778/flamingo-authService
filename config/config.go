@@ -9,6 +9,7 @@ import (
 // App config struct
 type Config struct {
 	Server   ServerConfig
+	Twilio   TwilioConfig
 	RabbitMQ RabbitMQ
 	Postgres PostgresConfig
 	Logger   Logger
@@ -52,6 +53,12 @@ type PostgresConfig struct {
 	PostgresqlDbname   string
 	PostgresqlSSLMode  bool
 	PgDriver           string
+}
+
+type TwilioConfig struct {
+	AccountSID string
+	AuthToken  string
+	Number     string
 }
 
 // Load config file from given path

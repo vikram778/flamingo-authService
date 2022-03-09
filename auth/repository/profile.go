@@ -10,7 +10,9 @@ func (r *DBOps) CreateProfile(ctx context.Context, profile *models.Profile) (*mo
 
 	profile.CreatedAt = time.Now()
 
-	_, err := r.db.Exec(
+	var id int64
+	err := r.db.QueryRowContext(
+		ctx,
 		createProfileQuery,
 		profile.Name,
 		profile.Mobile,
@@ -18,12 +20,13 @@ func (r *DBOps) CreateProfile(ctx context.Context, profile *models.Profile) (*mo
 		profile.Location,
 		profile.IsVerified,
 		profile.CreatedAt,
-	)
+	).Scan(&id)
 
 	if err != nil {
 		return nil, err
 	}
 
+	profile.ID = id
 	return profile, nil
 }
 

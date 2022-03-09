@@ -8,8 +8,8 @@ rabbitmq:
   Port: 5672
   User: guest
   Password: guest
-  Exchange: auth-exchange
-  Queue: auth-queue
+  Exchange: verification-exchange
+  Queue: verification
   RoutingKey: auth-routing-key
   ConsumerTag: auth-consumer
   WorkerPoolSize: 24
@@ -29,4 +29,9 @@ postgres:
   PostgresqlDbname: auth_db
   PostgresqlSslmode: false
   PgDriver: pgx
+
+twilio:
+  AccountSID: xxxxxxxxxxx
+  AuthToken: xxxxxxxxxx
+  Number: xxxxxxx
 

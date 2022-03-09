@@ -10,10 +10,10 @@ func (r *DBOps) CreateOTP(ctx context.Context, otp *models.OTP) (*models.OTP, er
 	return &models.OTP{}, nil
 }
 
-func (r *DBOps) VerifyOTP(ctx context.Context, otp, profileID int64) (bool, int64, error) {
+func (r *DBOps) VerifyOTP(ctx context.Context, otp string, profileID int64) (bool, int64, error) {
 	var otpModel models.OTP
 
-	if err := r.db.Get(&otpModel, verifyOTPQuery, profileID, time.Now()); err != nil || otpModel.Validated == true {
+	if err := r.db.Get(&otpModel, verifyOTPQuery, profileID, time.Now()); err != nil {
 		return false, 0, err
 	}
 

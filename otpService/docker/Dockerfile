@@ -10,7 +10,7 @@ RUN go mod download
 
 
 # Build the Go app
-RUN go build ./auth/cmd/auth_service/main.go
+RUN go build ./otpService/cmd/otp_service/main.go
 
 ##### new stage to copy the artifact #####
 

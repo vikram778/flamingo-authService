@@ -44,7 +44,7 @@ func NewPublisher(cfg *config.Config) (*Publisher, error) {
 }
 
 // SetupExchangeAndQueue create exchange and queue
-func (p *Publisher) SetupExchangeAndQueue(exchange, queueName, bindingKey, consumerTag string) error {
+func (p *Publisher) SetupExchangeAndQueue(exchange, queueName, bindingKey string) error {
 
 	err := p.amqpChan.ExchangeDeclare(
 		exchange,

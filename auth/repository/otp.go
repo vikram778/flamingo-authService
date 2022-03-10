@@ -7,7 +7,24 @@ import (
 )
 
 func (r *DBOps) CreateOTP(ctx context.Context, otp *models.OTP) (*models.OTP, error) {
-	return &models.OTP{}, nil
+
+	var id int64
+	err := r.db.QueryRowContext(
+		ctx,
+		createOTPQuery,
+		otp.ProfileID,
+		otp.OTP,
+		otp.Validated,
+		otp.CreatedAt,
+		otp.Expiry,
+	).Scan(&id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	otp.ID = id
+	return otp, nil
 }
 
 func (r *DBOps) VerifyOTP(ctx context.Context, otp string, profileID int64) (bool, int64, error) {

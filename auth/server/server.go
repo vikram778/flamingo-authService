@@ -34,7 +34,7 @@ func NewAuthServer(amqpConn *amqp.Connection, cfg *config.Config, db *sqlx.DB) *
 // Run server
 func (s *Server) Run() error {
 
-	authPublisher, err := rabbitmq.NewPublisher(s.cfg)
+	authPublisher, err := rabbitmq.NewPublisher(s.cfg, s.amqpConn)
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,6 @@ func (s *Server) Run() error {
 	log.Info("Auth Publisher initialized")
 
 	authRepository := repository.NewDBOpsRepository(s.db)
-	authAmqpPublisher, _ := rabbitmq.NewPublisher(s.cfg)
 
 	l, err := net.Listen("tcp", s.cfg.Server.Port)
 	if err != nil {
@@ -52,13 +51,13 @@ func (s *Server) Run() error {
 		_ = l.Close()
 	}(l)
 
-	err = authAmqpPublisher.SetupExchangeAndQueue(s.cfg.RabbitMQ.Exchange, s.cfg.RabbitMQ.Queue, s.cfg.RabbitMQ.RoutingKey, s.cfg.RabbitMQ.ConsumerTag)
+	err = authPublisher.SetupExchangeAndQueue(s.cfg.RabbitMQ.Exchange, s.cfg.RabbitMQ.Queue, s.cfg.RabbitMQ.RoutingKey)
 	if err != nil {
 		return err
 	}
 	server := grpc.NewServer()
 
-	authGrpcMicroservice := authGrpc.NewAuthMicroservice(*authRepository, s.cfg, *authAmqpPublisher)
+	authGrpcMicroservice := authGrpc.NewAuthMicroservice(*authRepository, s.cfg, *authPublisher)
 	authService.RegisterAuthServiceServer(server, authGrpcMicroservice)
 
 	log.Info("Auth Service initialized")

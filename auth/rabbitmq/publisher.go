@@ -30,12 +30,17 @@ type Publisher struct {
 }
 
 // NewPublisher Emails rabbitmq publisher constructor
-func NewPublisher(cfg *config.Config) (*Publisher, error) {
-	mqConn, err := rabbitmq.NewRabbitMQConn(cfg)
-	if err != nil {
-		return nil, err
+func NewPublisher(cfg *config.Config, amqpConn *amqp.Connection) (*Publisher, error) {
+
+	var err error
+
+	if amqpConn == nil {
+		amqpConn, err = rabbitmq.NewRabbitMQConn(cfg)
+		if err != nil {
+			return nil, err
+		}
 	}
-	amqpChan, err := mqConn.Channel()
+	amqpChan, err := amqpConn.Channel()
 	if err != nil {
 		return nil, errors.Wrap(err, "p.amqpConn.Channel")
 	}
